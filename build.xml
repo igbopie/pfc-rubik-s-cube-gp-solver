@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="GPRubiksCube">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../../../../Applications/eclipse"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.5"/>
+    <property name="source" value="1.5"/>
+    <path id="GPRubiksCube.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="lib/crimson.jar"/>
+        <pathelement location="lib/cubetwister.jar"/>
+        <pathelement location="lib/jaxp.jar"/>
+        <pathelement location="lib/jh.jar"/>
+        <pathelement location="lib/quaqua.jar"/>
+        <pathelement location="lib/xalan.jar"/>
+        <pathelement location="lib/iText-2.1.5.jar"/>
+        <pathelement location="lib/jfreechart-1.0.13.jar"/>
+        <pathelement location="lib/ecj.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src" excludes="**/*.launch, **/*.java"/>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="GPRubiksCube.classpath"/>
+        </javac>
+    </target>
+	
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="IndividualTester">
+        <java classname="ec.app.rubik.IndividualTester" failonerror="true" fork="yes">
+            <classpath refid="GPRubiksCube.classpath"/>
+        </java>
+    </target>
+
+    
+	<!-- these should make us run faster *lm* -->
+    <target depends="clean,init" name="performance-build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="false" debuglevel="none" compiler="modern" destdir="bin" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="GPRubiksCube.classpath"/>
+        </javac>
+    </target>
+    <target name="performance-GPKoza" depends="performance-build-project">
+        <java classname="ec.Evolve" failonerror="true" fork="yes">
+            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+            <arg line="-file Params/ec/app/rubik/rubiks_koza.params -p checkpoint=true -p checkpoint-modulo=10"/>
+            <classpath refid="GPRubiksCube.classpath"/>
+        </java>
+    </target>
+	<target name="Prueba1" depends="performance-build-project">
+    <java classname="ec.Evolve" failonerror="true" fork="yes">
+        <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+        <arg line="-file Params/ec/app/rubik/Prueba1.params"/>
+        <classpath refid="GPRubiksCube.classpath"/>
+    </java>
+	</target>
+	<target name="Prueba2" depends="performance-build-project">
+		  <java classname="ec.Evolve" failonerror="true" fork="yes">
+		            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+		            <arg line="-file Params/ec/app/rubik/Prueba2.params"/>
+		            <classpath refid="GPRubiksCube.classpath"/>
+		   </java>
+     </target>
+		<target name="Prueba3" depends="performance-build-project">
+			  <java classname="ec.Evolve" failonerror="true" fork="yes">
+			            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+			            <arg line="-file Params/ec/app/rubik/Prueba3.params "/>
+			            <classpath refid="GPRubiksCube.classpath"/>
+			   </java>
+		</target>
+		<target name="Prueba4" depends="performance-build-project">
+			  <java classname="ec.Evolve" failonerror="true" fork="yes">
+			            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+			            <arg line="-file Params/ec/app/rubik/Prueba4.params"/>
+			            <classpath refid="GPRubiksCube.classpath"/>
+			   </java>
+		</target>
+	<target name="Prueba5" depends="performance-build-project">
+			  <java classname="ec.Evolve" failonerror="true" fork="yes">
+			            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+			            <arg line="-file Params/ec/app/rubik/Prueba5.params"/>
+			            <classpath refid="GPRubiksCube.classpath"/>
+			   </java>
+	     </target>
+			<target name="Prueba6" depends="performance-build-project">
+				  <java classname="ec.Evolve" failonerror="true" fork="yes">
+				            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+				            <arg line="-file Params/ec/app/rubik/Prueba6.params "/>
+				            <classpath refid="GPRubiksCube.classpath"/>
+				   </java>
+			</target>
+			<target name="Prueba7" depends="performance-build-project">
+				  <java classname="ec.Evolve" failonerror="true" fork="yes">
+				            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+				            <arg line="-file Params/ec/app/rubik/Prueba7.params"/>
+				            <classpath refid="GPRubiksCube.classpath"/>
+				   </java>
+			</target>
+	<target name="Prueba8" depends="performance-build-project">
+		  <java classname="ec.Evolve" failonerror="true" fork="yes">
+		            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+		            <arg line="-file Params/ec/app/rubik/Prueba8.params"/>
+		            <classpath refid="GPRubiksCube.classpath"/>
+		   </java>
+	</target>
+	<target name="Prueba9" depends="performance-build-project">
+		  <java classname="ec.Evolve" failonerror="true" fork="yes">
+		            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+		            <arg line="-file Params/ec/app/rubik/Prueba9.params"/>
+		            <classpath refid="GPRubiksCube.classpath"/>
+		   </java>
+	</target>
+	<target name="Prueba10" depends="performance-build-project">
+		  <java classname="ec.Evolve" failonerror="true" fork="yes">
+		            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+		            <arg line="-file Params/ec/app/rubik/Prueba10.params"/>
+		            <classpath refid="GPRubiksCube.classpath"/>
+		   </java>
+	</target>
+	<target name="Prueba11" depends="performance-build-project">
+			  <java classname="ec.Evolve" failonerror="true" fork="yes">
+			            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+			            <arg line="-file Params/ec/app/rubik/Prueba11.params"/>
+			            <classpath refid="GPRubiksCube.classpath"/>
+			   </java>
+		</target>
+	<target name="Prueba12" depends="performance-build-project">
+	  <java classname="ec.Evolve" failonerror="true" fork="yes">
+	            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+	            <arg line="-file Params/ec/app/rubik/Prueba12.params"/>
+	            <classpath refid="GPRubiksCube.classpath"/>
+	   </java>
+</target>
+	<target name="Prueba13" depends="performance-build-project">
+	  <java classname="ec.Evolve" failonerror="true" fork="yes">
+	            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+	            <arg line="-file Params/ec/app/rubik/Prueba13.params"/>
+	            <classpath refid="GPRubiksCube.classpath"/>
+	   </java>
+		</target><target name="Prueba14" depends="performance-build-project">
+		  <java classname="ec.Evolve" failonerror="true" fork="yes">
+		            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+		            <arg line="-file Params/ec/app/rubik/Prueba14.params"/>
+		            <classpath refid="GPRubiksCube.classpath"/>
+		   </java>
+			</target><target name="Prueba15" depends="performance-build-project">
+		  <java classname="ec.Evolve" failonerror="true" fork="yes">
+		            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+		            <arg line="-file Params/ec/app/rubik/Prueba15.params"/>
+		            <classpath refid="GPRubiksCube.classpath"/>
+		   </java>
+				</target><target name="Prueba16" depends="performance-build-project">
+		  <java classname="ec.Evolve" failonerror="true" fork="yes">
+		            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+		            <arg line="-file Params/ec/app/rubik/Prueba16.params"/>
+		            <classpath refid="GPRubiksCube.classpath"/>
+		   </java>
+					</target><target name="Prueba17" depends="performance-build-project">
+	  <java classname="ec.Evolve" failonerror="true" fork="yes">
+	            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+	            <arg line="-file Params/ec/app/rubik/Prueba17.params"/>
+	            <classpath refid="GPRubiksCube.classpath"/>
+	   </java>
+				</target><target name="Prueba18" depends="performance-build-project">
+	  <java classname="ec.Evolve" failonerror="true" fork="yes">
+	            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+	            <arg line="-file Params/ec/app/rubik/Prueba18.params"/>
+	            <classpath refid="GPRubiksCube.classpath"/>
+	   </java>
+				</target><target name="Prueba19" depends="performance-build-project">
+	  <java classname="ec.Evolve" failonerror="true" fork="yes">
+	            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+	            <arg line="-file Params/ec/app/rubik/Prueba19.params"/>
+	            <classpath refid="GPRubiksCube.classpath"/>
+	   </java>
+				</target>
+	<target name="bigejecution" depends="performance-build-project">
+		  <java classname="ec.Evolve" failonerror="true" fork="yes">
+		            <jvmarg line="-Xmn2G -Xms3G -Xmx3G -XX:+AggressiveHeap -server"/>
+		            <arg line="-file Params/ec/app/rubik/rubiks_koza_big.params"/>
+		            <classpath refid="GPRubiksCube.classpath"/>
+		   </java>
+					</target>
+	<target name="pfc" depends="performance-build-project">
+			  <java classname="ec.Evolve" failonerror="true" fork="yes">
+			            <arg line="-file Params/ec/app/rubik/rubiks_koza_pfc.params"/>
+			            <classpath refid="GPRubiksCube.classpath"/>
+			   </java>
+	</target>
+	<target name="tester" depends="performance-build-project">
+				  <java classname="ec.app.rubik.IndividualTester" failonerror="true" fork="yes">
+				           
+				            <classpath refid="GPRubiksCube.classpath"/>
+				   </java>
+	</target>
+</project>
