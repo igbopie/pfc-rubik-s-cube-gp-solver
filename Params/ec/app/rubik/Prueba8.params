@@ -1,0 +1,7 @@
+parent.0 = PruebaCorta.params
+
+
+gp.koza.mutate.tries = 0
+
+prefix = prueba_8_rubik_cp 
+stat.file	$prueba8.stat

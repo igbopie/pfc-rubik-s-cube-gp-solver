@@ -1,0 +1,325 @@
+parent.0 = ../../gp/koza/koza.params
+
+##############################################################
+## Uncomment for Steady State Evolution
+##############################################################
+#state= ec.steadystate.SteadyStateEvolutionState
+#breed =					ec.steadystate.SteadyStateBreeder
+#eval =					ec.steadystate.SteadyStateEvaluator
+#steady.deselector.0=ec.select.TournamentSelection
+#steady.duplicate-retries = 0
+
+
+#Cambiamos el builder por el mio.
+gp.koza.mutate.build.0 = ec.app.rubik.MyGrowBuilder
+gp.tc.0.init = ec.app.rubik.MyHalfBuilder
+pop.subpop.0.species.fitness=ec.app.rubik.RubiksFitness
+stat = ec.app.rubik.RubiksStatistics
+
+checkpoint=false 
+checkpoint-modulo = 13
+prefix = rubik_cp_big 
+
+
+eval.problem.rubiksmoves = 10
+eval.problem.rubikstestedperevaluation = 200
+eval.problem.iterationsinevaluation=40
+gp.koza.fitness.factorfitness=1
+
+
+select.tournament.size = 4 
+gp.koza.xover.tries = 1000 
+gp.koza.mutate.tries = 10
+gp.koza.grow.max-depth = 100
+gp.koza.mutate.maxdepth=100
+gp.koza.xover.maxdepth=17
+
+# elitismo
+#breed.elite.0 = 5
+
+pop.subpop.0.size 		= 10000
+
+generations		= 1000
+quit-on-run-complete	= true
+breedthreads	= 8
+evalthreads	= 8
+
+
+
+###
+#select.tournament.size = 4
+#gp.koza.xover.maxdepth = 30
+#gp.koza.mutate.maxdepth = 100
+#gp.koza.grow.min-depth = 100
+#gp.koza.grow.max-depth = 200
+#gp.koza.mutate.tries = 10
+#pop.subpop.0.species.pipe.num-sources = 1
+#pop.subpop.0.species.pipe.source.0 = ec.gp.koza.CrossoverPipeline
+#pop.subpop.0.species.pipe.source.0.prob = 1
+
+# Define some primitive types
+# ---------------------------
+
+
+gp.type.a.size = 14
+gp.type.a.0.name = if
+gp.type.a.1.name = test
+gp.type.a.2.name = and
+gp.type.a.3.name = or
+gp.type.a.4.name = no
+gp.type.a.5.name = x
+gp.type.a.6.name = y
+gp.type.a.7.name = face
+gp.type.a.8.name = color
+gp.type.a.9.name = direction
+gp.type.a.10.name = action
+gp.type.a.11.name = empty
+gp.type.a.12.name = if2
+gp.type.a.13.name = if3
+
+
+gp.type.s.size = 6
+gp.type.s.0.name = cond
+gp.type.s.0.size = 4
+gp.type.s.0.member.0 = test
+gp.type.s.0.member.1 = and
+gp.type.s.0.member.2 = or
+gp.type.s.0.member.3 = no
+
+gp.type.s.1.name = if-empty
+gp.type.s.1.size = 2
+gp.type.s.1.member.0 = empty
+gp.type.s.1.member.1 = if
+
+
+gp.type.s.2.name = action-empty
+gp.type.s.2.size = 2
+gp.type.s.2.member.0 = action
+gp.type.s.2.member.1 = empty
+
+
+gp.type.s.3.name = if-exp
+gp.type.s.3.size = 3
+gp.type.s.3.member.0 = if2
+gp.type.s.3.member.1 = if3
+gp.type.s.3.member.2 = if
+
+gp.type.s.4.name = if-exp-empty
+gp.type.s.4.size = 4
+gp.type.s.4.member.0 = if2
+gp.type.s.4.member.1 = if3
+gp.type.s.4.member.2 = if
+gp.type.s.4.member.3 = empty
+
+gp.type.s.5.name = exp
+gp.type.s.5.size = 2
+gp.type.s.5.member.0 = if2
+gp.type.s.5.member.1 = if3
+
+gp.nc.size = 16
+
+gp.nc.0 = ec.gp.GPNodeConstraints
+gp.nc.0.name = IfFunction
+gp.nc.0.returns = if
+gp.nc.0.size = 2
+gp.nc.0.child.0 = cond
+gp.nc.0.child.1 = action
+
+gp.nc.1 = ec.gp.GPNodeConstraints
+gp.nc.1.name = TestFunction
+gp.nc.1.returns = test
+gp.nc.1.size = 4
+gp.nc.1.child.0 = x
+gp.nc.1.child.1 = y
+gp.nc.1.child.2 = face
+gp.nc.1.child.3 = color
+
+gp.nc.2 = ec.gp.GPNodeConstraints
+gp.nc.2.name = OrFunction
+gp.nc.2.returns = or
+gp.nc.2.size = 2
+gp.nc.2.child.0 = cond
+gp.nc.2.child.1 = cond
+
+
+gp.nc.3 = ec.gp.GPNodeConstraints
+gp.nc.3.name = AndFunction
+gp.nc.3.returns = and
+gp.nc.3.size = 2
+gp.nc.3.child.0 = cond
+gp.nc.3.child.1 = cond
+
+gp.nc.4 = ec.gp.GPNodeConstraints
+gp.nc.4.name = NoFunction
+gp.nc.4.returns = no
+gp.nc.4.size = 1
+gp.nc.4.child.0 = cond
+
+gp.nc.5 = ec.gp.GPNodeConstraints
+gp.nc.5.name = MoveFaceFunction
+gp.nc.5.returns = action
+gp.nc.5.size = 2
+gp.nc.5.child.0 = face
+gp.nc.5.child.1 = direction
+
+gp.nc.6 = ec.gp.GPNodeConstraints
+gp.nc.6.name = XTerminal
+gp.nc.6.returns = x
+gp.nc.6.size = 0
+
+gp.nc.7 = ec.gp.GPNodeConstraints
+gp.nc.7.name = YTerminal
+gp.nc.7.returns = y
+gp.nc.7.size = 0
+
+gp.nc.8 = ec.gp.GPNodeConstraints
+gp.nc.8.name = FaceTerminal
+gp.nc.8.returns = face
+gp.nc.8.size = 0
+
+gp.nc.9 = ec.gp.GPNodeConstraints
+gp.nc.9.name = ColorTerminal
+gp.nc.9.returns = color
+gp.nc.9.size = 0
+
+gp.nc.10 = ec.gp.GPNodeConstraints
+gp.nc.10.name = DirectionTerminal
+gp.nc.10.returns = direction
+gp.nc.10.size = 0
+
+gp.nc.11 = ec.gp.GPNodeConstraints
+gp.nc.11.name = EmptyTerminal
+gp.nc.11.returns = empty
+gp.nc.11.size = 0
+
+gp.nc.12 = ec.gp.GPNodeConstraints
+gp.nc.12.name = Progn2Function
+gp.nc.12.returns = action
+gp.nc.12.size = 2
+gp.nc.12.child.0 = action
+gp.nc.12.child.1 = action
+
+gp.nc.13 = ec.gp.GPNodeConstraints
+gp.nc.13.name = Progn3Function
+gp.nc.13.returns = action
+gp.nc.13.size = 3
+gp.nc.13.child.0 = action
+gp.nc.13.child.1 = action
+gp.nc.13.child.2 = action
+
+
+gp.nc.14 = ec.gp.GPNodeConstraints
+gp.nc.14.name = If2Function
+gp.nc.14.returns = if-exp
+gp.nc.14.size = 2
+gp.nc.14.child.0 = if-exp
+gp.nc.14.child.1 = if-exp-empty
+
+gp.nc.15 = ec.gp.GPNodeConstraints
+gp.nc.15.name = If3Function
+gp.nc.15.returns = if-exp
+gp.nc.15.size = 3
+gp.nc.15.child.0 = if-exp
+gp.nc.15.child.1 = if-exp
+gp.nc.15.child.2 = if-exp-empty
+
+gp.tc.0.returns = exp
+
+
+# We have one function set, of class GPFunctionSet
+#gp.fs.0 = ec.gp.GPFunctionSet
+# We'll call the function set "f0".  It uses the default GPFuncInfo class
+gp.fs.size = 1
+gp.fs.0.name = f0
+gp.fs.0.info = ec.gp.GPFuncInfo
+
+# We have five functions in the function set.  They are:
+gp.fs.0.size = 31
+gp.fs.0.func.0 = ec.app.rubik.func.If
+gp.fs.0.func.0.nc = IfFunction
+gp.fs.0.func.0.at = true
+gp.fs.0.func.1 = ec.app.rubik.func.Move
+gp.fs.0.func.1.nc = MoveFaceFunction
+gp.fs.0.func.1.at = true
+gp.fs.0.func.2 = ec.app.rubik.func.Test
+gp.fs.0.func.2.nc = TestFunction
+gp.fs.0.func.2.at = true
+gp.fs.0.func.3 = ec.app.rubik.func.x.X0
+gp.fs.0.func.3.nc = XTerminal
+gp.fs.0.func.4 = ec.app.rubik.func.x.X1
+gp.fs.0.func.4.nc = XTerminal
+gp.fs.0.func.5 = ec.app.rubik.func.x.X2
+gp.fs.0.func.5.nc = XTerminal
+gp.fs.0.func.6 = ec.app.rubik.func.y.Y0
+gp.fs.0.func.6.nc = YTerminal
+gp.fs.0.func.7 = ec.app.rubik.func.y.Y1
+gp.fs.0.func.7.nc = YTerminal
+gp.fs.0.func.8 = ec.app.rubik.func.y.Y2
+gp.fs.0.func.8.nc = YTerminal
+gp.fs.0.func.9 = ec.app.rubik.func.face.FaceFront
+gp.fs.0.func.9.nc = FaceTerminal
+gp.fs.0.func.10 = ec.app.rubik.func.face.FaceUp
+gp.fs.0.func.10.nc = FaceTerminal
+gp.fs.0.func.11 = ec.app.rubik.func.face.FaceDown
+gp.fs.0.func.11.nc = FaceTerminal
+gp.fs.0.func.12 = ec.app.rubik.func.face.FaceRight
+gp.fs.0.func.12.nc = FaceTerminal
+gp.fs.0.func.13 = ec.app.rubik.func.face.FaceLeft
+gp.fs.0.func.13.nc = FaceTerminal
+gp.fs.0.func.14 = ec.app.rubik.func.face.FaceBack
+gp.fs.0.func.14.nc = FaceTerminal
+gp.fs.0.func.15 = ec.app.rubik.func.color.Color5
+gp.fs.0.func.15.nc = ColorTerminal
+gp.fs.0.func.16 = ec.app.rubik.func.color.Color4
+gp.fs.0.func.16.nc = ColorTerminal
+gp.fs.0.func.17 = ec.app.rubik.func.color.Color3
+gp.fs.0.func.17.nc = ColorTerminal
+gp.fs.0.func.18 = ec.app.rubik.func.color.Color2
+gp.fs.0.func.18.nc = ColorTerminal
+gp.fs.0.func.19 = ec.app.rubik.func.color.Color1
+gp.fs.0.func.19.nc = ColorTerminal
+gp.fs.0.func.20 = ec.app.rubik.func.color.Color0
+gp.fs.0.func.20.nc = ColorTerminal
+gp.fs.0.func.21 = ec.app.rubik.func.direction.Clockwise
+gp.fs.0.func.21.nc = DirectionTerminal
+gp.fs.0.func.22 = ec.app.rubik.func.direction.CounterClockwise
+gp.fs.0.func.22.nc = DirectionTerminal
+gp.fs.0.func.23 = ec.app.rubik.func.And
+gp.fs.0.func.23.nc = AndFunction
+gp.fs.0.func.24 = ec.app.rubik.func.Or
+gp.fs.0.func.24.nc = OrFunction
+gp.fs.0.func.25 = ec.app.rubik.func.No
+gp.fs.0.func.25.nc = NoFunction
+gp.fs.0.func.26 = ec.app.rubik.func.Empty
+gp.fs.0.func.26.nc = EmptyTerminal
+gp.fs.0.func.27 = ec.app.rubik.func.Progn2
+gp.fs.0.func.27.nc = If2Function
+gp.fs.0.func.28 = ec.app.rubik.func.Progn3
+gp.fs.0.func.28.nc = If3Function
+gp.fs.0.func.29 = ec.app.rubik.func.Progn2
+gp.fs.0.func.29.nc = Progn2Function
+gp.fs.0.func.30 = ec.app.rubik.func.Progn3
+gp.fs.0.func.30.nc = Progn3Function
+
+
+eval.problem = ec.app.rubik.GPRubiks
+eval.problem.data = ec.app.rubik.RubiksData
+
+
+
+
+# The following should almost *always* be the same as eval.problem.data
+# For those who are interested, it defines the data object used internally
+# inside ADF stack contexts
+eval.problem.stack.context.data = ec.app.rubik.RubiksData
+
+
+seed.0		= time
+seed.1		= time
+seed.2		= time
+seed.3		= time
+seed.4          = time
+seed.5          = time
+seed.6          = time
+seed.7          = time
+

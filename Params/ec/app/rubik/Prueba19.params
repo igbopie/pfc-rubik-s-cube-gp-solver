@@ -1,0 +1,7 @@
+parent.0 = PruebaCorta.params
+
+
+gp.koza.fitness.factorfitness=4
+
+prefix = prueba_19_rubik_cp 
+stat.file	$prueba19.stat

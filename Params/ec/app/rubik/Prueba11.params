@@ -1,0 +1,7 @@
+parent.0 = PruebaCorta.params
+
+
+gp.koza.grow.max-depth = 10
+
+prefix = prueba_11_rubik_cp 
+stat.file	$prueba11.stat

@@ -1,0 +1,7 @@
+parent.0 = PruebaCorta.params
+
+
+gp.koza.xover.maxdepth=30
+
+prefix = prueba_13_rubik_cp 
+stat.file	$prueba13.stat

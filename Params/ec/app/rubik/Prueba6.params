@@ -1,0 +1,6 @@
+parent.0 = PruebaCorta.params
+
+select.tournament.size = 4
+
+prefix = prueba_6_rubik_cp 
+stat.file	$prueba6.stat

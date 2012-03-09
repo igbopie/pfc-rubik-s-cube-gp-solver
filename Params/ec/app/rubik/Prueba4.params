@@ -1,0 +1,6 @@
+parent.0 = PruebaCorta.params
+
+gp.koza.xover.tries = 1000
+
+prefix = prueba_4_rubik_cp 
+stat.file	$prueba4.stat

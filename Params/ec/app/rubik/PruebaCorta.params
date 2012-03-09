@@ -1,0 +1,18 @@
+parent.0 = rubiks_koza.params
+
+checkpoint=true 
+checkpoint-modulo = 50
+prefix = prueba_rubik_cp 
+
+eval.problem.rubiksmoves = 10
+eval.problem.rubikstestedperevaluation = 200
+eval.problem.iterationsinevaluation=10
+gp.koza.fitness.factorfitness=2
+
+
+pop.subpop.0.size 		= 1000
+
+generations		= 51
+quit-on-run-complete	= true
+breedthreads	= 8
+evalthreads	= 8
